@@ -46,11 +46,15 @@ def getproducts(request):
     query = request.query_params.get('keyword', '').strip()
     if query:
         # ✅ Filter only by product name
-        product = Product.objects.filter(productname__icontains=query)
+        # product = Product.objects.filter(productname__icontains=query)
+        product = Product.objects.filter(
+            Q(productname__icontains=query) | Q(productinfo__icontains=query)
+        )
     else:
         product = Product.objects.all()
     serializer = ProductSerializer(product, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def getproduct(request,pk):
@@ -172,3 +176,56 @@ def place_order(request):
 
     serializer = OrderSerializer(order, many=False)
     return Response(serializer.data)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_stock(request):
+    """
+    Reduce stock of products after order placement
+    """
+    items = request.data.get('items', [])  # Expect list of {id, qty}
+
+    if not items:
+        return Response({'error': 'No items provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+    for item in items:
+        try:
+            product = Product.objects.get(_id=item['id'])  # 👈 use _id, not id
+            qty = int(item['qty'])
+
+            if product.stockcount >= qty:
+                product.stockcount -= qty
+                product.save()
+            else:
+                return Response(
+                    {'error': f'Not enough stock for {product.productname}'},  # use productname
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except Product.DoesNotExist:
+            return Response({'error': f'Product with id {item["id"]} not found'},
+                            status=status.HTTP_404_NOT_FOUND)
+
+    return Response({'message': 'Stock updated successfully'}, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

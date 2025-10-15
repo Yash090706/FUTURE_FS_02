@@ -12,6 +12,9 @@ import ProductScreen from "./components/screens/productscreen.js";
 // import SearchScreen from "./components/screens/Searchscreen.js";
 import CategoryScreen from "./components/screens/CategoryScreen";
 import PlaceOrderScreen from "./components/screens/PlaceOrderScreen.js";
+import CheckoutScreen from "./components/screens/CheckoutScreen.js";
+// import SearchResultsScreen from "./components/screens/SearchResultsScreen.js";
+import SearchResultsScreen from "./components/screens/SearchScreen.js";
 
 const App = () => {
   return (
@@ -26,6 +29,8 @@ const App = () => {
             <Route exact path="/signup" element={<SignUpScreen/>}/>
             <Route exact path="/cart/:id?" element={<CartScreen/>}/> 
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
+            <Route path="/checkout" element={<CheckoutScreen />} />
+            <Route path="/search/:keyword" element={<SearchResultsScreen />} /> 
           </Routes>
         </Router>
 

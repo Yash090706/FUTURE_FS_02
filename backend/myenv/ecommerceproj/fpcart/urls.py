@@ -16,6 +16,7 @@ urlpatterns = [
     path('activate/<uidb64>/<token>',views.ActivateAccountView.as_view(),name='activate'),
     path('products/category/<str:category>/', views.getProductsByCategory, name="products-by-category"),
     path('orders/place/', views.place_order, name="place-order"),
+    path('update-stock/', views.update_stock, name='update-stock'),
 
 
     

@@ -1,0 +1,26 @@
+/* Make row a flex container with full height */
+.product-row {
+  display: flex;
+  flex-wrap: nowrap; /* prevent wrapping */
+  align-items: stretch; /* stretch all columns to same height */
+}
+
+/* Image column as flex container */
+.product-image-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image stretches to fill the column height */
+.product-image {
+  flex: 1;               /* grow to fill column height */
+  width: 100%;
+  object-fit: cover;     /* crop nicely */
+  display: block;
+}
+
+/* Card column fill height */
+.card-flex {
+  display: flex;
+  flex-direction: column;
+}

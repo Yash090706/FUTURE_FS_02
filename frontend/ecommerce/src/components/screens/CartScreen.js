@@ -20,6 +20,8 @@ function CartScreen({params}) {
 
   const cart=useSelector(state=>state.cart)
   const{cartItems}=cart
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   useEffect(()=>{
     if(productId){
       dispatch(addToCart(productId,qty))
@@ -31,7 +33,11 @@ function CartScreen({params}) {
     dispatch(removeFromCart(id))
   }
   const checkoutHandler=()=>{
-    navigate('/login')
+     if (userInfo) {
+      navigate("/checkout"); // ✅ user logged in → go to checkout
+    } else {
+      navigate("/login?redirect=/checkout"); // ❌ not logged in → go to login first
+    }
   }
   const totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
   const totalPrice = cartItems

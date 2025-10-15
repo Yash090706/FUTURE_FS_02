@@ -23,9 +23,29 @@ useEffect(()=>{
   return (
 
     <Container>
-      <br>
-      </br>
-      <Row>
+      <div
+        style={{
+          background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)",
+          color: "white",
+          borderRadius: "15px",
+          padding: "40px 20px",
+          textAlign: "center",
+          marginBottom: "30px",
+          marginTop:"20px"
+        }}
+      >
+        <h2 style={{ fontWeight: "bold" }}>Welcome to Our Store 🛍️</h2>
+        <p style={{ fontSize: "18px" }}>
+          Discover amazing products at the best prices
+        </p>
+      </div>
+
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Featured Products
+      </h2>
+      
+      
+      <Row className="g-4">
         {
           loading?(
            <Loader/>
@@ -34,6 +54,7 @@ useEffect(()=>{
           ):(
                     products.map((product) => {
   return (
+    
     <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
       <Products product={product}/>
       

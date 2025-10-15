@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function Products({ product }) {
   return (
-    <Card className="my-3 p-3 rounded">
+    <Card className="my-10 py-3 rounded h-100 d-flex flex-column">
       <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} />
       </Link>
