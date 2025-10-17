@@ -41,9 +41,14 @@ const Header = () => {
         </li>
         <li className="nav-item">
           <LinkContainer to="/Cart">
-          <Nav.Link className="nav-link">Cart</Nav.Link>
+          <Nav.Link className="nav-link active">Cart</Nav.Link>
           </LinkContainer>
+          
         </li>
+              <LinkContainer to="/myorders">
+<Nav.Link className="nav-link">View Orders 
+  </Nav.Link>
+</LinkContainer>
       {userInfo?(
          <li className="nav-item dropdown">
    <LinkContainer to="/">

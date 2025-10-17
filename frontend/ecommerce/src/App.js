@@ -15,6 +15,8 @@ import PlaceOrderScreen from "./components/screens/PlaceOrderScreen.js";
 import CheckoutScreen from "./components/screens/CheckoutScreen.js";
 // import SearchResultsScreen from "./components/screens/SearchResultsScreen.js";
 import SearchResultsScreen from "./components/screens/SearchScreen.js";
+import OrderDetailsScreen from "./components/screens/OrderDetailsScreen.js";
+import MyOrdersScreen from "./components/screens/MyOrdersScreen.js";
 
 const App = () => {
   return (
@@ -31,6 +33,10 @@ const App = () => {
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
             <Route path="/checkout" element={<CheckoutScreen />} />
             <Route path="/search/:keyword" element={<SearchResultsScreen />} /> 
+            {/* <Route path="/order/:id" element={<OrderDetailsScreen />} /> */}
+            <Route path="/order/:id" element={<OrderDetailsScreen />} />
+            <Route path="/myorders" element={<MyOrdersScreen />} />
+
           </Routes>
         </Router>
 

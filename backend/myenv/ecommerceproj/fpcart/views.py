@@ -206,6 +206,163 @@ def update_stock(request):
 
     return Response({'message': 'Stock updated successfully'}, status=status.HTTP_200_OK)
 
+# Assuming you have an Order model and an OrderSerializer
+
+
+
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_order(request):
+    user = request.user
+    data = request.data
+
+    items = data.get('items', [])
+    if not items:
+        return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # 1️⃣ Create the Order object
+    order = Order.objects.create(
+        user=user,
+        paymentMethod=data.get('payment_method', 'Cash on Delivery'),
+        totalPrice=0,  # temporary, will calculate below
+    )
+
+    total = 0
+    order_items_list = []
+
+    # 2️⃣ Create OrderItem objects
+    for item in items:
+        product_id = item.get('_id') or item.get('product')
+        try:
+            product = Product.objects.get(_id=product_id)
+        except Product.DoesNotExist:
+            return Response({'detail': f'Product with ID {product_id} not found'}, status=404)
+
+        qty = item.get('qty', 1)
+        price = product.price or 0
+
+        # Check stock
+        if product.stockcount < qty:
+            return Response({'detail': f'Not enough stock for {product.productname}'}, status=400)
+
+        # Create order item
+        order_item = OrderItem.objects.create(
+            product=product,
+            order=order,
+            name=product.productname,
+            qty=qty,
+            price=price,
+        )
+
+        # Reduce stock
+        product.stockcount -= qty
+        product.save()
+
+        total += qty * price
+        order_items_list.append({
+            '_id': order_item.id,
+            'name': order_item.name,
+            'qty': order_item.qty,
+            'price': order_item.price,
+        })
+
+    # 3️⃣ Update order total
+    order.totalPrice = total
+    order.save()
+
+    # 4️⃣ Return full order data
+    return Response({
+        '_id': order.id,  # use id
+        'user': user.username,
+        'paymentMethod': order.paymentMethod,
+        'totalPrice': order.totalPrice,
+        'orderItems': order_items_list,
+        'message': 'Order created successfully!',
+    })
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getMyOrders(request):
+    user = request.user
+    orders = Order.objects.filter(user=user).order_by('-id')
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
