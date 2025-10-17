@@ -54,7 +54,7 @@ function OrderDetailsScreen() {
             <h5>Order Info</h5>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <strong>Order ID:</strong> {order._id}
+                <strong>Order ID:</strong> {order.id}
               </ListGroup.Item>
               <ListGroup.Item>
                 <strong>Payment Method:</strong> {order.paymentMethod}

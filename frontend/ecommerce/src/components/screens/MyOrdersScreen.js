@@ -62,7 +62,8 @@ function MyOrdersScreen() {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td>{order._id}</td>
+                <td>{order.id}</td>
+                
                 <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                 <td>Rs.{Number(order.totalPrice).toFixed(2)}</td>
                 <td>{order.paymentMethod}</td>

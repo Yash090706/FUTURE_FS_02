@@ -5,6 +5,8 @@ import { Navbar,Nav } from 'react-bootstrap'
 import { useSelector,useDispatch } from 'react-redux'
 import { logout } from '../actions/useractions'
 import SearchBox from './searchbox'
+// import { FaCircleUser } from 'react-icons/fa6';
+
 
 
 const Header = () => {
@@ -41,12 +43,17 @@ const Header = () => {
         </li>
         <li className="nav-item">
           <LinkContainer to="/Cart">
-          <Nav.Link className="nav-link active">Cart</Nav.Link>
+          <Nav.Link className="nav-link active">Cart <i class="fa-solid fa-cart-shopping"></i></Nav.Link>
           </LinkContainer>
           
         </li>
+        <LinkContainer to="/profile">
+        <Nav.Link className="text-white">
+          Account
+        </Nav.Link>
+      </LinkContainer>
               <LinkContainer to="/myorders">
-<Nav.Link className="nav-link">View Orders 
+<Nav.Link className="nav-link text-white " >View Orders <i class="fa-solid fa-bag-shopping"></i>
   </Nav.Link>
 </LinkContainer>
       {userInfo?(
